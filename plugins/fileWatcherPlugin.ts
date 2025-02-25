@@ -10,7 +10,7 @@ const doChange: any = debounce(async (file: string) => {
   // 检查是否匹配需要监听的文件
   if (file === PAGES_TS_PATH || regex.test(file)) {
     console.log(`文件[${file}]变化, 重新构建 pages.json`)
-    await execPromise('pnpm run build:pages')
+    await execPromise('npm run build:pages')
   }
 }, 50)
 

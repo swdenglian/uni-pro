@@ -2,6 +2,8 @@
 import { ENV } from '@/data/env'
 import { UserDomain } from '@/domain'
 import { useCounterStore } from '@/domain/counter'
+import { Screens } from '@/route.const'
+import { Navigate } from '@/shared'
 import { ref } from 'vue'
 
 const title = ref('Hello')
@@ -19,7 +21,11 @@ console.log(import.meta.env)
 
 UserDomain().login({} as any)
 
-const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index/demo/index' })
+function toHomeDemo() {
+  return Navigate.push({
+    url: Screens.HomeDemo,
+  })
+}
 </script>
 
 <template>
@@ -32,7 +38,7 @@ const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index/demo/index' })
       </text>
       <text>Current Count: {{ counter.count }}</text>
     </view>
-    <button @click="toIndex2">
+    <button @click="toHomeDemo">
       toDemo
     </button>
   </view>

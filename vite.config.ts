@@ -10,7 +10,7 @@ const PAGES_DIR_PATH = path.resolve(__dirname, './src/ui/pages')
 
 export default defineConfig(async () => {
   try {
-    await execPromise('pnpm run build:pages')
+    await execPromise('npm run build:pages')
   }
   catch (error) {
     console.error('Build pages failed:', error)

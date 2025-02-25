@@ -1,5 +1,5 @@
 export const pagesJson = {
-  home: 'ui/pages/index/index',
+  home: 'ui/pages/home/index',
   easycom: {
     autoscan: true,
     custom: {
