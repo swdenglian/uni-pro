@@ -1,3 +1,10 @@
+# 支持
+- [x] Android离线打包/命令打包
+- [x] Pinia
+
+# 框架说明
+- [本地缓存](./docs/Storage.md)
+
 # 命令说明
 ```json5
 {
@@ -36,6 +43,7 @@
 # 技术栈
 - [vite](https://cn.vitejs.dev/guide/)
 - [typescript](https://www.typescriptlang.org/)
+- [Pinia](https://pinia.vuejs.org/zh/)
 - [uni-app](https://uniapp.dcloud.net.cn/)
   - [uni-ui](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
   - [android离线打包](https://nativesupport.dcloud.net.cn/AppDocs/usesdk/android.html)

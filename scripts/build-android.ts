@@ -20,18 +20,6 @@ function getEnvByPath(path: string) {
   return dotEnvs
 }
 
-async function buildAppPlusByCmd() {
-  const subprocess = $`npm run build:app-plus`
-
-  // 捕获并打印子进程的标准输出
-  subprocess.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`)
-  })
-
-  await subprocess
-  console.log('build:app-plus run success')
-}
-
 async function copyAppPlus() {
   const { appid } = appConfig
   await $`rm -rf ./android/app/src/main/assets/apps/${appid}`
@@ -55,7 +43,6 @@ async function buildAndroid() {
 }
 
 (async () => {
-  await buildAppPlusByCmd()
   await copyAppPlus()
   await buildAndroid()
 })()

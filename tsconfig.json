@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@dcloudio/types", "src/third.d.ts"],
+    "types": ["@dcloudio/types", "src/third.d.ts", "src/data/env/env.d.ts"],
     "sourceMap": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]

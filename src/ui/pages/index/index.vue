@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ENV } from '@/data/env'
 import { useCounterStore } from '@/domain/counter'
 import { ref } from 'vue'
 
@@ -11,6 +12,9 @@ counter.$patch({ count: counter.count + 1 })
 // 或使用 action 代替
 counter.increment()
 counter.increment()
+
+console.log(ENV)
+console.log(import.meta.env)
 
 const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index2/index' })
 </script>
