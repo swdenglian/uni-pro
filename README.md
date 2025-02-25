@@ -45,6 +45,7 @@
 - [vite](https://cn.vitejs.dev/guide/)
 - [typescript](https://www.typescriptlang.org/)
 - [Pinia](https://pinia.vuejs.org/zh/)
+- [Axios](https://axios-http.com/docs/intro)
 - [uni-app](https://uniapp.dcloud.net.cn/)
   - [uni-ui](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
   - [android离线打包](https://nativesupport.dcloud.net.cn/AppDocs/usesdk/android.html)
