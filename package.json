@@ -1,9 +1,6 @@
 {
   "name": "uni-app-vue3-demo",
   "version": "0.1.0",
-  "imports": {
-    "#json": "json"
-  },
   "scripts": {
     "dev:custom": "uni -p",
     "dev:h5": "uni",

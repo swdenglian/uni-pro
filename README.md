@@ -1,6 +1,6 @@
 # 命令说明
 
-```json
+```json5
 {
   "scripts": {
     // 构建不同环境的Android包，构建结果在android/app/build/outputs/apk/release/ 下
