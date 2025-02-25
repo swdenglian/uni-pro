@@ -33,6 +33,23 @@ export class Storage {
     return null
   }
 
+  getItemSync<T>(key: string): T | null {
+    const memoryItem = this.memoryStorage.getItem<T>(key)
+    if (memoryItem !== null) {
+      return memoryItem
+    }
+
+    // 如果内存中没有，从持久化存储中获取
+    const data = this.UniStorage.getStorageSync<T>(key)
+    if (data) {
+      // 将数据缓存到内存中
+      this.memoryStorage.setItem(key, data)
+      return data
+    }
+
+    return null
+  }
+
   async setItem<T>(
     key: string,
     value: T,

@@ -4,6 +4,7 @@
 
 # 框架说明
 - [本地缓存](./docs/Storage.md)
+- [Http请求](./docs/HttpClient.md)
 
 # 命令说明
 ```json5

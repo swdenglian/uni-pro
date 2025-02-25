@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ENV } from '@/data/env'
+import { UserDomain } from '@/domain'
 import { useCounterStore } from '@/domain/counter'
 import { ref } from 'vue'
 
@@ -15,6 +16,8 @@ counter.increment()
 
 console.log(ENV)
 console.log(import.meta.env)
+
+UserDomain().login({} as any)
 
 const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index2/index' })
 </script>
