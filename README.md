@@ -1,6 +1,8 @@
 # 支持
 - [x] Android离线打包/命令打包
 - [x] Pinia
+- [x] uni-ui
+- [x] Axios
 
 # 框架说明
 - [本地缓存](./docs/Storage.md)
