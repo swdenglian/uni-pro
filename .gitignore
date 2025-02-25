@@ -30,3 +30,4 @@ android/build
 
 # uni-app
 unpackage
+src/pages.json
