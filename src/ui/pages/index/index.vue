@@ -19,7 +19,7 @@ console.log(import.meta.env)
 
 UserDomain().login({} as any)
 
-const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index2/index' })
+const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index/demo/index' })
 </script>
 
 <template>
@@ -33,7 +33,7 @@ const toIndex2 = () => uni.navigateTo({ url: '/ui/pages/index2/index' })
       <text>Current Count: {{ counter.count }}</text>
     </view>
     <button @click="toIndex2">
-      toIndex2
+      toDemo
     </button>
   </view>
 </template>
