@@ -1,0 +1,108 @@
+import groovy.json.JsonSlurper
+
+apply plugin: 'com.android.application'
+
+def baseDir = file('../../')
+def configJsonFile = new File(baseDir, 'src/manifest.json')
+def json = new JsonSlurper()
+def config = json.parse(configJsonFile)
+
+def ENV_NAME = project.hasProperty("ENV_NAME") ? project.ENV_NAME : "unknow"
+
+task generateXmlFile {
+    doLast {
+        // 读取模板 XML（支持占位符）
+        def xmlTemplate = file('src/main/assets/data/dcloud_control_template.xml')
+        def xmlContent = xmlTemplate.text
+
+        // 动态替换占位符
+        def replacedContent = xmlContent.replace('${config.appid}', config.appid)
+        // 如果有更多字段，继续扩展...
+
+        // 生成最终 XML 文件
+        def xmlFile = file('src/main/assets/data/dcloud_control.xml')
+        xmlFile.parentFile.mkdirs()
+        xmlFile.text = replacedContent
+    }
+}
+
+// 动态绑定资源处理任务到 generateXmlFile
+tasks.whenTaskAdded { task ->
+    if (task.name == 'processDebugResources' || task.name == 'processReleaseResources') {
+        task.dependsOn generateXmlFile
+    }
+}
+
+android {
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
+    namespace 'com.android.simple'
+    defaultConfig {
+        applicationId config.android.applicationId
+        versionCode config.versionCode
+        versionName config.versionName
+
+        minSdkVersion 21
+        targetSdkVersion 33
+        multiDexEnabled true
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_11
+            targetCompatibility JavaVersion.VERSION_11
+        }
+    }
+    signingConfigs {
+        create('config') {
+            keyAlias config.appid
+            keyPassword config.android.signingConfigs.keyPassword
+            storeFile new File(baseDir, config.android.signingConfigs.storeFile)
+            storePassword config.android.signingConfigs.storePassword
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "dcloud_appkey", config.android.dcloudAppKey
+            resValue "string", "app_name", config.android.appName ? config.android.appName : config.appName
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "dcloud_appkey", config.android.dcloudAppKey
+            resValue "string", "app_name", config.android.appName ? config.android.appName : config.appName
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def timestamp = new Date().getTime();
+
+            outputFileName = "${ENV_NAME}_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.name}_${timestamp}.apk"
+        }
+    }
+
+    aaptOptions {
+        additionalParameters '--auto-add-overlay'
+        ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.core:core:1.1.0'
+    implementation "androidx.fragment:fragment:1.1.0"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.facebook.fresco:fresco:2.5.0'
+    implementation "com.facebook.fresco:animated-gif:2.5.0"
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'androidx.webkit:webkit:1.5.0'
+}
+

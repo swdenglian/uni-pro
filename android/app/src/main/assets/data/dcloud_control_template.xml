@@ -1,0 +1,5 @@
+<hbuilder>
+    <apps>
+        <app appid="${config.appid}" appver="" />
+    </apps>
+</hbuilder>
