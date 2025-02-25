@@ -6,6 +6,7 @@ const title = ref('Hello')
 
 <template>
   <view class="content">
+    <uni-badge text="1" />
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
       <text class="title">
