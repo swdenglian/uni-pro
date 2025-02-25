@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useCounterStore } from '@/domain/counter'
 import { ref } from 'vue'
 
+const counter = useCounterStore()
 const title = ref('Hello2222')
 </script>
 
@@ -11,6 +13,7 @@ const title = ref('Hello2222')
       <text class="title">
         {{ title }}
       </text>
+      <text>{{ counter.count }}</text>
     </view>
   </view>
 </template>

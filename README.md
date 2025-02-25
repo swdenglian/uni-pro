@@ -1,5 +1,4 @@
 # 命令说明
-
 ```json5
 {
   "scripts": {
@@ -33,3 +32,11 @@
   }
 }
 ```
+
+# 技术栈
+- [vite](https://cn.vitejs.dev/guide/)
+- [typescript](https://www.typescriptlang.org/)
+- [uni-app](https://uniapp.dcloud.net.cn/)
+  - [uni-ui](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
+  - [android离线打包](https://nativesupport.dcloud.net.cn/AppDocs/usesdk/android.html)
+
