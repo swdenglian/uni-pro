@@ -29,11 +29,15 @@ export async function createPages() {
 
   // 动态导入 pages 配置（保留原有配置）
   const { pagesJson } = await import('../src/pages')
+  const rawPages = generatePagesConfig(pagesDir)
 
   // 生成新的页面配置
   const pagesConfig = {
     ...pagesJson,
-    pages: generatePagesConfig(pagesDir),
+    pages: [
+      ...rawPages.filter(page => page.path === pagesJson.home),
+      ...rawPages.filter(page => page.path !== pagesJson.home),
+    ],
   }
 
   // 写入 pages.json 文件
