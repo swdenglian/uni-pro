@@ -7,6 +7,8 @@
 # 框架说明
 - [本地缓存](./docs/Storage.md)
 - [Http请求](./docs/HttpClient.md)
+- [弹窗提示](./docs/Message.md)
+- [导航API](./docs/Navigate.md)
 
 # 命令说明
 ```json5
