@@ -30,4 +30,12 @@ export class Navigate {
   public static redirect(params: Parameters<typeof uni.redirectTo>[0]) {
     uni.redirectTo(params)
   }
+
+  /**
+   * 切换TabBar页面
+   * @param params
+   */
+  public static switchTab(params: Parameters<typeof uni.switchTab>[0]) {
+    uni.switchTab(params)
+  }
 }
