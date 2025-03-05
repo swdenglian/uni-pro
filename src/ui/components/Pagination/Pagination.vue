@@ -49,7 +49,7 @@ async function onRefresh() {
   currentPage.value = 1
   hasMore.value = true
   noData.value = false
-  await loadData()
+  await loadData(true)
 }
 
 // 监听滚动到底部
@@ -62,7 +62,7 @@ async function onScrollToLower() {
 }
 
 onMounted(() => {
-  loadData()
+  loadData(true)
 })
 </script>
 
