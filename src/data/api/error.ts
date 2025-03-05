@@ -13,6 +13,10 @@ export class HttpError extends Error {
   ) {
     super(message)
   }
+
+  public handle() {
+    console.log(this)
+  }
 }
 
 /** HTTP 网络异常错误 */
@@ -36,6 +40,10 @@ export class AuthError extends HttpError {
       401,
       error.config,
     )
+  }
+
+  public handle() {
+    // 可以处理跳转到登录页或者其他操作
   }
 }
 

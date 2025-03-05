@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios'
-import { ENV } from '@/data'
 import { HttpClient } from '@/data/api/HttpClient'
+import { ENV } from '@/data/env'
 import { UserDomain } from '@/domain'
 
 export function createHttpClient() {

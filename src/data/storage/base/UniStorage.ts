@@ -1,5 +1,5 @@
 export class UniStorage {
-  private storageKey = 'uni_storage'
+  private storageKey = 'app_storage'
 
   public async clearStorage() {
     uni.clearStorageSync()
@@ -33,11 +33,11 @@ export class UniStorage {
     try {
       const item = uni.getStorageSync(`${this.storageKey}_${key}`)
 
-      if (!item || !item.data) {
+      if (!item) {
         return null
       }
 
-      const { value, expire } = item.data
+      const { value, expire } = item
 
       if (expire && new Date(expire) < new Date()) {
         this.removeStorageSync(key)
