@@ -6,6 +6,16 @@
 - [x] uni-ui
 - [x] Axios
 
+## Pro路由说明
+
+本项目采用约定式路由，按照下方规则生成路由，即生成uni-app的[pages.json](https://uniapp.dcloud.net.cn/collocation/pages.html):
+
+- 监听 src/ui/pages 目录，其中index.vue将会生成对应的路由，其余的均不生成路由
+- 更新 pages.json 时机
+  - 创建 index.vue 文件时
+  - 删除 index.vue 文件时
+  - 项目启动时
+
 ## Pro内置工具说明
 - [本地缓存](./docs/Storage.md)
 - [Http请求](./docs/HttpClient.md)
