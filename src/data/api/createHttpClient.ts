@@ -1,3 +1,6 @@
+/**
+ * @file 创建httpClient，用于发起http请求
+ */
 import type { AxiosResponse } from 'axios'
 import { HttpClient } from '@/data/api/HttpClient'
 import { ENV } from '@/data/env'

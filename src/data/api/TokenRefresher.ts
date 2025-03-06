@@ -1,8 +1,7 @@
-import type { UserDomain } from '@/domain'
-
 /**
  * @file Token 刷新器，暂时无用
  */
+import type { UserDomain } from '@/domain'
 
 export class TokenRefresher {
   private isRefreshing = false

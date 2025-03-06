@@ -1,5 +1,5 @@
 /**
- * @file 接口请求错误类型
+ * @file 定义接口错误类型，并处理
  */
 import type { AxiosError, AxiosRequestConfig } from 'axios'
 

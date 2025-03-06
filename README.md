@@ -1,16 +1,22 @@
-# 支持
+# uni-pro
+
+## 支持
 - [x] Android离线打包/命令打包
 - [x] Pinia
 - [x] uni-ui
 - [x] Axios
 
-# 框架说明
+## Pro内置工具说明
 - [本地缓存](./docs/Storage.md)
 - [Http请求](./docs/HttpClient.md)
 - [弹窗提示](./docs/Message.md)
 - [导航API](./docs/Navigate.md)
+- Pro项目内置组件
+  - [Page 页面组件](./src/ui/components/Page/README.md)
+  - [NavBar 导航栏组件](./src/ui/components/NavBar/README.md)
+  - [Pagination 分页组件](./src/ui/components/Pagination/README.md)
 
-# 命令说明
+## Pro命令说明
 ```json5
 {
   "scripts": {
@@ -22,7 +28,7 @@
 }
 ```
 
-# src/manifest.json 说明
+## src/manifest.json 说明
 
 ```json5
 {
@@ -45,7 +51,7 @@
 }
 ```
 
-# 技术栈
+## 技术栈
 - [vite](https://cn.vitejs.dev/guide/)
 - [typescript](https://www.typescriptlang.org/)
 - [Pinia](https://pinia.vuejs.org/zh/)
@@ -53,4 +59,3 @@
 - [uni-app](https://uniapp.dcloud.net.cn/)
   - [uni-ui](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
   - [android离线打包](https://nativesupport.dcloud.net.cn/AppDocs/usesdk/android.html)
-

@@ -1,5 +1,5 @@
 /**
- * @file 业务错误请求
+ * @file 定义HttpClient, 用于发起HTTP请求。
  */
 import type { Interceptor } from '@/data/api/interceptor'
 import type { IResponse } from '@/data/api/type'
