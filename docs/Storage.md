@@ -1,21 +1,55 @@
-# Storage 类文档
+# Storage
 
-## 概述
+## When To Use
 
-`Storage` 类是一个双层级存储管理器，结合 **内存缓存** 和 **持久化存储**（Uni-App 跨平台存储）实现高效数据管理。适用于需要快速读取且数据持久化的场景。
-
----
-
-## 属性
-
-| 属性名称          | 类型               | 描述                              |
-|-------------------|--------------------|-----------------------------------|
-| `private UniStorage` | `UniStorage`       | 持久化存储实例（基于 Uni-App API） |
-| `private memoryStorage` | `MemoryStorage` | 内存缓存实例                      |
+`Storage` 类适用于需要兼顾快速读取与数据持久化的跨平台场景，例如：
+- 用户登录态（Token）存储
+- 高频访问的配置项缓存
+- 临时表单数据暂存
 
 ---
 
-## 方法
+## Examples
+
+### 基础用法
+```tsx
+// 初始化实例（通常由框架注入）
+const storage = new Storage();
+
+// 存储用户信息（默认7天过期）
+await storage.setItem('user', { name: '张三', age: 25 });
+
+// 获取用户信息（优先从内存读取）
+const user = await storage.getItem<User>('user');
+
+// 清空所有存储
+await storage.clear();
+```
+
+### 自定义过期时间
+```tsx
+// 存储临时验证码（5分钟后过期）
+const expire = new Date(Date.now() + 5 * 60 * 1000);
+await storage.setItem('captcha', '123456', expire);
+```
+
+---
+
+## API
+
+### 属性
+| 属性名称          | 类型               | 描述                              | 版本  |
+|-------------------|--------------------|-----------------------------------|-------|
+| `private UniStorage` | `UniStorage`       | 持久化存储实例（基于 Uni-App API） | 1.0.0 |
+| `private memoryStorage` | `MemoryStorage` | 内存缓存实例                      | 1.0.0 |
+
+### 方法
+| 方法名                          | 描述                                                                 | 参数                                                                 | 返回值               | 默认值       | 版本  |
+|---------------------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|----------------------|--------------|-------|
+| `clear()`                       | 同步清除内存缓存和持久化存储中的全部数据                             | -                                                                    | `Promise<void>`      | -            | 1.0.0 |
+| `getItem<T>(key: string)`       | 优先从内存读取，无数据则从持久化存储读取并自动缓存                   | `key` (string): 数据键名                                             | `Promise<T | null>`  | -            | 1.0.0 |
+| `getItemSync<T>(key: string)`   | 同步版本获取方法（注意：持久化存储同步读取可能阻塞主线程）           | `key` (string): 数据键名                                             | `T | null`           | -            | 1.1.0 |
+| `setItem<T>(key, value, expire)`| 同时更新内存缓存和持久化存储，支持设置过期时间（默认7天）             | `key` (string): 键名<br>`value` (T): 数据<br>`expire?` (Date): 过期时间 | `Promise<T | null>`  | `createExpireDate()` | 1.0.0 |
 
 ### `clear()`
 
@@ -25,84 +59,77 @@
 - **返回值**: `Promise<void>`
 - **示例**:
   ```typescript
-  await storage.clear();
+  await storage.clear()
   ```
 
 ---
 
-### `getItem<T>(key: string): Promise<T | null>`  
-**获取指定键的数据**  
+### `getItem<T>(key: string): Promise<T | null>`
+**获取指定键的数据**
 
-- **功能**:  
-  1. 优先从内存缓存读取数据  
-  2. 若内存无数据则从持久化存储读取  
-  3. 成功读取后自动将数据缓存到内存  
-- **参数**:  
-  - `key` (string): 数据键名  
-- **返回值**: `Promise<T | null>` - 返回数据或 `null`（不存在/已过期）  
-- **示例**:  
+- **功能**:
+  1. 优先从内存缓存读取数据
+  2. 若内存无数据则从持久化存储读取
+  3. 成功读取后自动将数据缓存到内存
+- **参数**:
+  - `key` (string): 数据键名
+- **返回值**: `Promise<T | null>` - 返回数据或 `null`（不存在/已过期）
+- **示例**:
   ```typescript
   // 获取用户信息
-  const user = await storage.getItem<User>('user_info');
+  const user = await storage.getItem<User>('user_info')
   ```
 
 ---
 
-### `setItem<T>(key: string, value: T, expire?: Date): Promise<T | null>`  
-**设置指定键的数据**  
+### `setItem<T>(key: string, value: T, expire?: Date): Promise<T | null>`
+**设置指定键的数据**
 
-- **功能**:  
-  1. 同时更新内存缓存和持久化存储  
-  2. 支持设置数据过期时间（默认 24 小时）  
-- **参数**:  
-  - `key` (string): 数据键名  
-  - `value` (T): 要存储的数据  
-  - `expire?` (Date): [可选] 过期时间（默认 `createExpireDate()` 7天）  
-- **返回值**: `Promise<T | null>` - 成功存储返回原数据，失败返回 `null`  
-- **错误处理**:  
+- **功能**:
+  1. 同时更新内存缓存和持久化存储
+  2. 支持设置数据过期时间（默认 24 小时）
+- **参数**:
+  - `key` (string): 数据键名
+  - `value` (T): 要存储的数据
+  - `expire?` (Date): [可选] 过期时间（默认 `createExpireDate()` 7天）
+- **返回值**: `Promise<T | null>` - 成功存储返回原数据，失败返回 `null`
+- **错误处理**:
   ```typescript
   try {
-    await storage.setItem('token', 'abc123');
-  } catch (error) {
-    console.error('存储失败:', error);
+    await storage.setItem('token', 'abc123')
+  }
+  catch (error) {
+    console.error('存储失败:', error)
   }
   ```
-- **示例**:  
+- **示例**:
   ```typescript
   // 存储带过期时间的token（7天）
-  const token = 'user_token';
-  await storage.setItem<string>(token, token, new Date(Date.now() + 7 * 24 * 60 * 60));
+  const token = 'user_token'
+  await storage.setItem<string>(token, token, new Date(Date.now() + 7 * 24 * 60 * 60))
   ```
 
 ---
 
-## 使用说明
+## Design Token
 
-### 缓存策略
-1. **优先读取内存**：10ms 内快速响应  
-2. **自动持久化**：首次访问冷数据时会自动缓存到内存  
-3. **过期处理**：  
-   - 内存数据随进程结束失效  
-   - 持久化数据按 `expire` 字段自动失效
-
-### 数据类型支持
-- 支持原生类型及复杂对象  
-- **注意**: 需自行处理 JSON 序列化/反序列化（如存储对象前使用 `JSON.stringify`）
+| Token 名称           | 类型     | 描述                     | 默认值       |
+|----------------------|----------|--------------------------|--------------|
+| `storage.maxMemory`  | `number` | 内存缓存最大容量（MB）   | 10           |
+| `storage.expireUnit` | `string` | 默认过期时间单位         | 'day'        |
 
 ---
 
-## 注意事项
+## FAQ
 
-1. **存储限制**  
-   - 微信小程序：单账号 10MB  
-   - H5/APP：无明确限制（受设备存储空间影响）
+### Q: 内存缓存和持久化存储的优先级是怎样的？
+A: 读取时优先内存（10ms内响应），内存无数据时读取持久化存储并自动同步到内存；写入时同时更新两者。
 
-2. **异常处理**  
-   - 持久化存储失败时内存缓存仍保留数据  
-   - 建议关键数据添加重试机制
+### Q: 微信小程序存储限制如何处理？
+A: 建议对大文件（如图像）使用 `uni.saveFile` 替代，关键小数据使用 `Storage` 管理。
 
-3. **内存管理**  
-   - 避免存储过量数据导致内存泄漏  
-   - 可通过 `memoryStorage` 实现自定义清理策略
+### Q: 数据过期后会自动清理吗？
+A: 内存数据随进程结束自动清理；持久化数据在下次调用 `getItem` 时检查过期时间，过期数据返回 `null` 并自动清理。
 
----
+### Q: 如何自定义内存清理策略？
+A: 可通过 `storage.memoryStorage` 访问底层 `MemoryStorage` 实例，调用其 `removeItem` 或 `clear` 方法手动清理。
