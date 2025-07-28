@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Screens } from '@/route.const'
+import type { ScreenName } from '@/route.const'
 import { Navigate } from '@/shared'
 import { computed } from 'vue'
 import SafeArea from '../SafeArea/SafeArea.vue'
@@ -15,7 +15,7 @@ interface TabBarItem {
     active: string
   }
   text: string
-  path: Screens
+  path: ScreenName
 }
 
 interface Props {
@@ -49,7 +49,10 @@ const activeIndex = computed(() => {
         v-for="(item, index) in items" :key="item.key" class="tabBarItem" :class="{ active: activeIndex === index }"
         @click="nav(item.path)"
       >
-        <image class="icon" :style="item.icon.size" :src="activeIndex === index ? item.icon.active : item.icon.normal" />
+        <image
+          class="icon" :style="item.icon.size"
+          :src="activeIndex === index ? item.icon.active : item.icon.normal"
+        />
         <text class="text">
           {{ item.text }}
         </text>
