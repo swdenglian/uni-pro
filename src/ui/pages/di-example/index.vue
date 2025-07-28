@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IUserService } from '@/services/UserService'
-import { USER_SERVICE_TOKEN } from '@/services/UserService'
+import type { IUserService } from '@/services'
+import { USER_SERVICE_TOKEN } from '@/services'
 import { container } from '@/shared/di'
 
 const userService = container.resolve<IUserService>(USER_SERVICE_TOKEN)
