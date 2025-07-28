@@ -1,7 +1,10 @@
+import type { IAuthService } from '@/services/IAuthService'
 /**
  * @file 定义接口错误类型，并处理
  */
 import type { AxiosError, AxiosRequestConfig } from 'axios'
+import { AUTH_SERVICE_TOKEN } from '@/services/IAuthService'
+import { container } from '@/shared/di'
 
 /** HTTP 请求错误基类 */
 export class HttpError extends Error {
@@ -43,7 +46,20 @@ export class AuthError extends HttpError {
   }
 
   public handle() {
-    // 可以处理跳转到登录页或者其他操作
+    // 通过依赖注入获取认证服务并处理认证失败
+    try {
+      const authService = container.resolve<IAuthService>(AUTH_SERVICE_TOKEN)
+      authService.handleAuthFailure().catch((error) => {
+        console.error('处理认证失败时出错:', error)
+      })
+    }
+    catch (error) {
+      console.error('无法获取认证服务:', error)
+      // 降级处理：直接跳转到登录页
+      uni.reLaunch({
+        url: '/ui/pages/login/index',
+      })
+    }
   }
 }
 

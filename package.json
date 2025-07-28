@@ -36,6 +36,7 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-4040520250104002",
     "@dcloudio/uni-ui": "^1.5.7",
     "@uni-helper/axios-adapter": "^1.5.2",
+    "@vue/reactivity": "^3.5.18",
     "axios": "^1.7.9",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",

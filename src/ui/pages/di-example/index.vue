@@ -2,38 +2,13 @@
 import type { IUserService } from '@/services/UserService'
 import { USER_SERVICE_TOKEN } from '@/services/UserService'
 import { container } from '@/shared/di'
-import { onMounted, ref } from 'vue'
 
 const userService = container.resolve<IUserService>(USER_SERVICE_TOKEN)
-const user = ref<{ id: string, name: string } | null>(null)
-const loading = ref(false)
-
-async function loadUser() {
-  loading.value = true
-  try {
-    user.value = await userService.getCurrentUser()
-  }
-  catch (error) {
-    console.error('加载用户失败:', error)
-    uni.showToast({
-      title: '加载用户失败',
-      icon: 'error',
-    })
-  }
-  finally {
-    loading.value = false
-  }
-}
 
 async function updateUser() {
-  if (!user.value)
-    return
-
-  loading.value = true
   try {
-    const newName = `${user.value.name}_更新`
-    await userService.updateUser(user.value.id, { name: newName })
-    user.value.name = newName
+    const newName = `${userService.userName.value}_更新`
+    userService.updateUserName(newName)
     uni.showToast({
       title: '更新成功',
       icon: 'success',
@@ -46,14 +21,7 @@ async function updateUser() {
       icon: 'error',
     })
   }
-  finally {
-    loading.value = false
-  }
 }
-
-onMounted(() => {
-  loadUser()
-})
 </script>
 
 <template>
@@ -70,24 +38,12 @@ onMounted(() => {
           当前用户:
         </text>
         <text class="value">
-          {{ user?.name || '加载中...' }}
+          {{ userService.userName.value || '加载中...' }}
         </text>
       </view>
 
       <view class="actions">
-        <button
-          class="btn primary"
-          :disabled="loading"
-          @click="loadUser"
-        >
-          {{ loading ? '加载中...' : '重新加载用户' }}
-        </button>
-
-        <button
-          class="btn secondary"
-          :disabled="loading || !user"
-          @click="updateUser"
-        >
+        <button class="btn secondary" @click="updateUser">
           更新用户名
         </button>
       </view>
