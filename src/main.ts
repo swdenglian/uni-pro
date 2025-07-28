@@ -1,3 +1,6 @@
+/* eslint-disable perfectionist/sort-imports */
+import 'reflect-metadata'
+
 import * as Pinia from 'pinia'
 import { createSSRApp } from 'vue'
 import App from './App.vue'

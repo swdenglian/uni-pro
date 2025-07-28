@@ -13,6 +13,12 @@ defineOptions({ name: 'HomeComponents' })
           <uni-list-item show-arrow title="分页组" right-text="Pagination" link :to="Screens.ComponentsPagination" />
         </uni-list>
       </uni-section>
+
+      <uni-section title="架构示例" type="line">
+        <uni-list>
+          <uni-list-item show-arrow title="依赖注入示例" right-text="TSyringe DI" link :to="Screens.DIExample" />
+        </uni-list>
+      </uni-section>
     </scroll-view>
   </Page>
 </template>

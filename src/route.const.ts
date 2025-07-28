@@ -26,6 +26,12 @@ export const ScreenConfigs = {
     path: '/ui/pages/components/pagination/index',
     params: undefined,
   }),
+
+  /** 依赖注入示例 */
+  DIExample: defineScreenConfig({
+    path: '/ui/pages/di-example/index',
+    params: undefined,
+  }),
 }
 
 // 导出 ScreenConfigs 的类型
